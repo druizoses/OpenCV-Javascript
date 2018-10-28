@@ -3,15 +3,40 @@
 <head>
     <title>OpenCV Test</title>
 </head>
-<body>
-	<canvas id="imageCanvas"  width="200" height="100"></canvas>
-<script async src="https://docs.opencv.org/3.3.1/opencv.js" type="text/javascript"></script>
+<body onload="onloadOpenCV()">
+	<canvas id="imageCanvasSrc" width="300" height="169"></canvas>
+	<canvas id="imageCanvasDst"  width="300" height="169"></canvas>
+<script async src="libraries/opencv.js" type="text/javascript"></script>
 <script type="text/javascript">
+var cvMat;
 var onloadOpenCV = function()
 {
-var cvMat = new cv.Mat(200,200,1);
-cv.imshow('imageCanvas', cvMat);
+ var canvas = document.getElementById('imageCanvasSrc');
+ var context = canvas.getContext('2d');
+      var imageObj = new Image();
+      imageObj.onload = function() {
+        context.drawImage(imageObj, 0, 0);
+      };
+      imageObj.src = 'images/124.jpg';
+ 
+	
+	createTestImage();
+	readImageSource();
+}
+
+var createTestImage = function()
+{
+
+	cvMat = new cv.Mat(169,300,1);
+	cv.imshow('imageCanvasDst', cvMat);
+}
+
+var readImageSource = function()
+{
+	var cvMatSrc = cv.imread('imageCanvasSrc');
+	cv.imshow('imageCanvasDst', cvMatSrc);
 }
 </script>
 </body>
 </html>
+
